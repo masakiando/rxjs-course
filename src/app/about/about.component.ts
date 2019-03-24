@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { interval, timer, fromEvent, Observable, noop, } from 'rxjs';
+import { merge, interval, concat, timer, fromEvent, Observable, noop, of} from 'rxjs';
 import { map } from 'rxjs/operators';
 import { createHttpObservable } from '../util';
+import { initNgModule } from '@angular/core/src/view/ng_module';
 
 @Component({
   selector: 'about',
@@ -13,9 +14,27 @@ export class AboutComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-
+    const http$ = createHttpObservable('/api/courses');
+    const sub = http$.subscribe();
+    setTimeout(() => sub.unsubscribe(), 0);
   }
 }
+
+// const interval$ = interval(1000);
+// const subscription = interval$.subscribe(console.log);
+// setTimeout(() => subscription.unsubscribe(), 5000);
+// merge
+// const interva1l$ = interval(1000);
+// const interval2$ = interva1l$.pipe(map(val => 10 * val));
+// const result$ = merge(interva1l$, interval2$);
+// result$.subscribe(console.log);
+// concat
+// const source1$ = interval(1000);
+// const source2$ = of(4, 5, 6);
+// const source3$ = of(7, 8, 9);
+// const result$ = concat(source1$, source2$, source3$);
+// result$.subscribe(console.log);
+
 // const http$ = createHttpObservable('/api/courses');
 // const courses$ = http$.pipe(map(res => Object.values(res['payload'])));
 // courses$.subscribe(
