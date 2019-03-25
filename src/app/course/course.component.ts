@@ -16,6 +16,7 @@ import {
 } from 'rxjs/operators';
 import {merge, fromEvent, Observable, concat, fromEventPattern} from 'rxjs';
 import {Lesson} from '../model/lesson';
+import { startTimeRange } from '@angular/core/src/profile/wtf_impl';
 
 
 @Component({
@@ -42,17 +43,27 @@ export class CourseComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
-      const searchLesson$ = fromEvent<any>(this.input.nativeElement, 'keyup')
-      .pipe(
-          map(event => event.target.value),
-          debounceTime(400),
-          distinctUntilChanged(),
-          switchMap(search => this.loadLessons(search))
-          // concatMap(search => this.loadLessons(search))
-       );
+        this.lessons$  = fromEvent<any>(this.input.nativeElement, 'keyup')
+        .pipe(
+            map(event => event.target.value),
+            startWith(''),
+            debounceTime(400),
+            distinctUntilChanged(),
+            switchMap(search => this.loadLessons(search))
+            // concatMap(search => this.loadLessons(search))
+         );
 
-       const initialLessons$ = this.loadLessons();
-       this.lessons$ = concat(initialLessons$, searchLesson$);
+    //   const searchLesson$ = fromEvent<any>(this.input.nativeElement, 'keyup')
+    //   .pipe(
+    //       map(event => event.target.value),
+    //       debounceTime(400),
+    //       distinctUntilChanged(),
+    //       switchMap(search => this.loadLessons(search))
+    //       // concatMap(search => this.loadLessons(search))
+    //    );
+
+    //    const initialLessons$ = this.loadLessons();
+    //    this.lessons$ = concat(initialLessons$, searchLesson$);
     }
 
     loadLessons(search = ''): Observable<Lesson[]> {
