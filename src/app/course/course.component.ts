@@ -2,6 +2,7 @@ import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/
 import {ActivatedRoute} from "@angular/router";
 import {Course} from "../model/course";
 import { createHttpObservable } from '../util';
+import { debug, RxJsLoggingLevel, setRxJsLoggingLevel } from '../debug';
 import {
     debounceTime,
     distinctUntilChanged,
@@ -12,11 +13,10 @@ import {
     concatMap,
     switchMap,
     withLatestFrom,
-    concatAll, shareReplay, throttleTime
+    concatAll, shareReplay,
 } from 'rxjs/operators';
-import {merge, fromEvent, Observable, concat, fromEventPattern} from 'rxjs';
+import {merge, fromEvent, Observable, concat, fromEventPattern } from 'rxjs';
 import {Lesson} from '../model/lesson';
-import { startTimeRange } from '@angular/core/src/profile/wtf_impl';
 
 
 @Component({
@@ -39,32 +39,26 @@ export class CourseComponent implements OnInit, AfterViewInit {
 
     ngOnInit() {
         this.courseId = this.route.snapshot.params['id'];
-        this.course$ = createHttpObservable(`/api/courses/${this.courseId}`);
+        this.course$ = createHttpObservable(`/api/courses/${this.courseId}`)
+        .pipe(
+            debug( RxJsLoggingLevel.INFO, 'course value'),
+        );
+
+        setRxJsLoggingLevel(RxJsLoggingLevel.TRACE);
     }
 
     ngAfterViewInit() {
-        this.lessons$  = fromEvent<any>(this.input.nativeElement, 'keyup')
-        .pipe(
-            map(event => event.target.value),
-            // startWith(''),
-            // debounceTime(400),
-            // distinctUntilChanged(),
-            // switchMap(search => this.loadLessons(search)),
-            throttleTime(500)
-            // concatMap(search => this.loadLessons(search))
-         );
-
-    //   const searchLesson$ = fromEvent<any>(this.input.nativeElement, 'keyup')
-    //   .pipe(
-    //       map(event => event.target.value),
-    //       debounceTime(400),
-    //       distinctUntilChanged(),
-    //       switchMap(search => this.loadLessons(search))
-    //       // concatMap(search => this.loadLessons(search))
-    //    );
-
-    //    const initialLessons$ = this.loadLessons();
-    //    this.lessons$ = concat(initialLessons$, searchLesson$);
+      const initialLessons$ = this.loadLessons();
+      this.lessons$ = fromEvent<any>(this.input.nativeElement, 'keyup')
+      .pipe(
+          map(event => event.target.value),
+          startWith(''),
+          debug( RxJsLoggingLevel.TRACE, 'search'),
+          debounceTime(400),
+          distinctUntilChanged(),
+          switchMap(search => this.loadLessons(search)),
+          debug( RxJsLoggingLevel.DEBUG, 'lessons value'),
+       );
     }
 
     loadLessons(search = ''): Observable<Lesson[]> {
@@ -72,6 +66,35 @@ export class CourseComponent implements OnInit, AfterViewInit {
       pipe(map(res => res['payload']));
     }
 }
+
+const config = [
+    {
+      groupA: {
+          sen1: {
+              id: 0,
+              name: '',
+              label: 'xxx',
+              iconSrc: 'xxx',
+              title: '',
+              suUser: false,
+          },
+          sen2: {
+              id: 0,
+              name: '',
+              label: 'xxx',
+              iconSrc: 'xxx',
+              title: '',
+              suUser: false,
+          }
+      },
+      groupB: {
+          
+      },
+      groupC: {},
+      groupD: {},
+      groupE: {},
+    }
+];
 
 
 // let input = document.querySelector('input');
