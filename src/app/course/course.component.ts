@@ -48,7 +48,6 @@ export class CourseComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
-      const initialLessons$ = this.loadLessons();
       this.lessons$ = fromEvent<any>(this.input.nativeElement, 'keyup')
       .pipe(
           map(event => event.target.value),
@@ -107,3 +106,12 @@ const config = [
 //     console.log(event.target.value);
 //   }
 // });
+
+// forkJoin(course$, lesson$)
+// .pipe(
+//     tap(([course, lessons]) => {
+//         console.log('course', course);
+//         console.log('lessons', lessons);
+//     })
+// )
+// .subscribe();

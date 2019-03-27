@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { merge, interval, concat, timer, fromEvent, Observable, noop, of} from 'rxjs';
-import { map } from 'rxjs/operators';
+import { merge, interval, concat, timer, fromEvent, Observable, noop, of, forkJoin} from 'rxjs';
+import { map, mapTo, tap } from 'rxjs/operators';
 import { createHttpObservable } from '../util';
 import { initNgModule } from '@angular/core/src/view/ng_module';
-
+import { debug, RxJsLoggingLevel, setRxJsLoggingLevel } from '../debug';
 @Component({
   selector: 'about',
   templateUrl: './about.component.html',
@@ -14,9 +14,31 @@ export class AboutComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    const http$ = createHttpObservable('/api/courses');
-    const sub = http$.subscribe();
-    setTimeout(() => sub.unsubscribe(), 0);
+    setRxJsLoggingLevel(RxJsLoggingLevel.INFO);
+    // forkJoin (1)
+    // const getPostOne$ = timer(1000).pipe(mapTo({id: 1}));
+    // const getPostTwo$ = timer(2000).pipe(mapTo({id: 2}));
+
+    // forkJoin(getPostOne$, getPostTwo$).subscribe(res => console.log(res));
+
+    // forkJoin (2)
+    const http1$ = createHttpObservable('https://swapi.co/api/people/1/');
+    const http2$ = createHttpObservable('https://swapi.co/api/starships/9/');
+    forkJoin(http1$, http2$)
+    .pipe(
+        tap(([people, starships]) => {
+            console.log('course', people);
+            console.log('lessons', starships);
+        }),
+        debug( RxJsLoggingLevel.INFO, 'people, starships'),
+
+    )
+    .subscribe(res => console.log(res));
+
+    // AbortController test
+    // const http$ = createHttpObservable('/api/courses');
+    // const sub = http$.subscribe(res => console.log(res));
+    // setTimeout(() => sub.unsubscribe(), 0);
   }
 }
 
@@ -104,3 +126,10 @@ export class AboutComponent implements OnInit {
     // setTimeout(() => {
     //   console.log('finished...');
     // }, 3000);
+
+    function test() {
+      return [ {q: 'ss'}, {b: 'bb'} ];
+    }
+    const [ a, b ] = test();
+    console.log(a, b);
+
