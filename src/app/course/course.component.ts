@@ -13,11 +13,11 @@ import {
     concatMap,
     switchMap,
     withLatestFrom,
-    concatAll, shareReplay,
+    concatAll, shareReplay, first,
 } from 'rxjs/operators';
-import {merge, fromEvent, Observable, concat, fromEventPattern } from 'rxjs';
+import { merge, Observable, concat, forkJoin, fromEvent } from 'rxjs';
 import {Lesson} from '../model/lesson';
-
+import { Store } from '../common/store.service';
 
 @Component({
     selector: 'course',
@@ -25,25 +25,41 @@ import {Lesson} from '../model/lesson';
     styleUrls: ['./course.component.css']
 })
 export class CourseComponent implements OnInit, AfterViewInit {
-    courseId: string;
+    courseId: number;
     course$: Observable<Course>;
     lessons$: Observable<Lesson[]>;
-
+    // course: Course;
 
     @ViewChild('searchInput') input: ElementRef;
 
-    constructor(private route: ActivatedRoute) {
-
-
-    }
+    constructor(
+        private route: ActivatedRoute,
+        private store: Store,
+    ) {}
 
     ngOnInit() {
         this.courseId = this.route.snapshot.params['id'];
-        this.course$ = createHttpObservable(`/api/courses/${this.courseId}`)
-        .pipe(
-            debug( RxJsLoggingLevel.INFO, 'course value'),
-        );
+        this.course$ = this.store.selectCourseById(this.courseId);
+        // .pipe(
+        //     first(),
+        //     debug( RxJsLoggingLevel.INFO, 'course', 'CourseComponent'),
+        // );
 
+        // forkJoin(this.course$, this.loadLessons()).subscribe(console.log);
+        // this.course$ = createHttpObservable(`/api/courses/${this.courseId}`)
+        // .pipe(
+        //     debug( RxJsLoggingLevel.INFO, 'course value'),
+        // );
+        // this.course$.subscribe(course => this.course = course);
+        this.loadLessons()
+        .pipe(
+            withLatestFrom(this.course$)
+        )
+        .subscribe(([lessons, course]) => {
+          console.log('lessons', lessons);
+          console.log('course', course);
+          
+        });
         setRxJsLoggingLevel(RxJsLoggingLevel.TRACE);
     }
 
@@ -52,11 +68,11 @@ export class CourseComponent implements OnInit, AfterViewInit {
       .pipe(
           map(event => event.target.value),
           startWith(''),
-          debug( RxJsLoggingLevel.TRACE, 'search'),
+        //   debug( RxJsLoggingLevel.TRACE, 'search', 'CourseComponent'),
           debounceTime(400),
           distinctUntilChanged(),
           switchMap(search => this.loadLessons(search)),
-          debug( RxJsLoggingLevel.DEBUG, 'lessons value'),
+          debug( RxJsLoggingLevel.DEBUG, 'lessons value', 'CourseComponent'),
        );
     }
 

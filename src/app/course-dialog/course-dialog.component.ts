@@ -7,6 +7,7 @@ import {fromEvent, Observable } from 'rxjs';
 import {concatMap, distinctUntilChanged, exhaustMap, filter, mergeMap, shareReplay, switchMap} from 'rxjs/operators';
 import {fromPromise} from 'rxjs/internal-compatibility';
 import { saveCourse } from '../../../server/save-course.route';
+import { Store } from '../common/store.service';
 
 @Component({
     selector: 'course-dialog',
@@ -25,7 +26,8 @@ export class CourseDialogComponent implements OnInit, AfterViewInit {
     constructor(
         private fb: FormBuilder,
         private dialogRef: MatDialogRef<CourseDialogComponent>,
-        @Inject(MAT_DIALOG_DATA) course: Course
+        @Inject(MAT_DIALOG_DATA) course: Course,
+        private store: Store,
      ) {
 
         this.course = course;
@@ -60,8 +62,6 @@ export class CourseDialogComponent implements OnInit, AfterViewInit {
         ));
     }
 
-
-
     ngAfterViewInit() {
       fromEvent(this.saveButton.nativeElement, 'click')
       .pipe(
@@ -71,7 +71,13 @@ export class CourseDialogComponent implements OnInit, AfterViewInit {
       .subscribe();
     }
 
-
+    save() {
+        this.store.saveCourse(this.course.id, this.form.value);
+        // .subscribe(
+        //     () => this.close(),
+        //     err => console.log('Error saving course', err)
+        // );
+    }
 
     close() {
         this.dialogRef.close();

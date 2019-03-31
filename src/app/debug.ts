@@ -1,5 +1,6 @@
 import { Observable } from 'rxjs';
 import {tap} from 'rxjs/operators';
+import { Component } from '@angular/core';
 
 export enum  RxJsLoggingLevel {
   TRACE,
@@ -14,12 +15,16 @@ export function setRxJsLoggingLevel(level: RxJsLoggingLevel) {
     rxjsLoggingLevel = level;
 }
 
-export const debug = (level: number, message: string) => (source: Observable<any>) =>
+export const debug = (level: number, message: string, component?: string) => (source: Observable<any>) =>
    source
     .pipe(
         tap(val => {
 　　　　　　　if (level >= rxjsLoggingLevel) {
-              console.log(`${message}: `, val);
+              console.log(
+                `${message}: `,
+                val === null ? 'null' : val === '' ? '空文字' : val === undefined ? 'undefined' : val,
+                component
+              );
             }
         })
     );
