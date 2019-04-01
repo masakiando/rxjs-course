@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { merge, interval, concat, timer, fromEvent, Observable, noop, of, forkJoin, Subject, BehaviorSubject} from 'rxjs';
-import { map, mapTo, tap, take, first } from 'rxjs/operators';
+import { map, mapTo, tap, take, first, switchMap } from 'rxjs/operators';
 import { createHttpObservable } from '../util';
 import { initNgModule } from '@angular/core/src/view/ng_module';
 import { debug, RxJsLoggingLevel, setRxJsLoggingLevel } from '../debug';
@@ -14,25 +14,51 @@ export class AboutComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    // document.addEventListener('click', evt => {
+    //   console.log(evt);
+    //   setTimeout(() => {
+    //     console.log('finished...');
+    //     let counter = 0;
+    //     setInterval(() => {
+    //       console.log(counter);
+    //       counter++;
+    //     }, 1000);
+    //   }, 3000);
+    // });
+// const http$ = createHttpObservable('/api/courses');
+// const sub = http$.subscribe(res => console.log(res));
+// setTimeout(() => sub.unsubscribe(), 0)
+// const interval$ = interval(1000)
+    // const interval$ = timer(3000, 1000);
+    // const sub = interval$.subscribe(val => console.log(val));
+    // setTimeout(() => sub.unsubscribe(), 10000);
+    // const click$ = fromEvent(document, 'click');
+    // click$.subscribe(val => console.log(val));
+    // const source = fromEvent(document, 'click');
+    // const example = source.pipe(
+    //   switchMap(val => interval(1000).pipe(mapTo('Hello, I made it!')))
+    // );
+    // const subscribe = example.subscribe(val => console.log(val));
+    
+        // const myInterval = Rx.Observable.interval(1000);
+      }
 
-    // first(1) success
-    of(1, 3, 7, 9, 10, 80, 100, 200)
-    .pipe(
-      first(v => v % 2 === 0 && v > 30 && v <= 100),
-      // debug( RxJsLoggingLevel.INFO, 'value'),
-    ).subscribe(
-      v  => console.log(`${v}は31以上100以下です。` , // output 80
-      error => console.log(error),
-    ));
-    // first(2) files
-    of(1, 3, 7, 9, 10, 80, 100, 200)
-    .pipe(
-      first(v => v % 2 === 1 && v > 30 && v <= 100),
-      ).subscribe(
-      v => console.log(v),
-      error => console.log(error), // output error
-    );
-
+        // // first(1) success
+        // of(1, 3, 7, 9, 10, 80, 100, 200)
+        // .pipe(
+        //   first(v => v % 2 === 0 && v > 30 && v <= 100),
+        //   // debug( RxJsLoggingLevel.INFO, 'value'),
+        // ).subscribe(
+        //   v  => console.log(`${v}は31以上100以下です。` , // output 80
+        //   error => console.log(error),
+        // ));
+        // // first(2) files
+        // of(1, 3, 7, 9, 10, 80, 100, 200)
+        // .pipe(
+        //   first(v => v % 2 === 1 && v > 30 && v <= 100),
+        //   ).subscribe(
+        //   v => console.log(v),
+        //   error => console.log(error), // output erro
     // forkJoin
     // const obs$ = forkJoin(
     //   timer(3000, 1000).pipe(take(3)),
@@ -61,16 +87,14 @@ export class AboutComponent implements OnInit {
   //   subject.next(4);
   // }, 3000);
 
-  }
-}
 // Observableからobs作る
 // e.g. wraps callback, event, ... => 'Passive(受動的)'
 // 受動的 => 他から動作・作用を及ぼされるさま。自分の意志からでなく、他に動かされてするさま。
-const obs = Observable.create();
+// const obs = Observable.create();
 // Observableからsub作る next()を使う
 // can be triggered fromm code(コードからトリガすることができます) => 'Active(能動的)'
 // 能動的 => 自分から他へはたらきかけるさま。
-const sub = Subject.create(); // SubjectもObservableの仲間です！　next()
+// const sub = Subject.create(); // SubjectもObservableの仲間です！　next()
 
 // setRxJsLoggingLevel(RxJsLoggingLevel.INFO);
 // forkJoin (1)
