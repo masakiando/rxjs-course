@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { merge, interval, concat, timer, fromEvent, Observable, noop, of, forkJoin, Subject, BehaviorSubject} from 'rxjs';
-import { map, mapTo, tap, take, first, switchMap } from 'rxjs/operators';
+import { Component, OnInit, ViewEncapsulation, ViewChild, ElementRef } from '@angular/core';
+import { merge, interval, concat, timer, fromEvent, Observable, noop, of, forkJoin, Subject, BehaviorSubject, range, from} from 'rxjs';
+import { map, mapTo, tap, take, first, switchMap, reduce, max, min, combineLatest, buffer, scan, single } from 'rxjs/operators';
 import { createHttpObservable } from '../util';
 import { initNgModule } from '@angular/core/src/view/ng_module';
 import { debug, RxJsLoggingLevel, setRxJsLoggingLevel } from '../debug';
+
 @Component({
   selector: 'about',
   templateUrl: './about.component.html',
@@ -11,9 +12,29 @@ import { debug, RxJsLoggingLevel, setRxJsLoggingLevel } from '../debug';
 })
 export class AboutComponent implements OnInit {
   public deleteSubject = new Subject();
+  source$: Observable<any>;
+  @ViewChild('http') button: ElementRef;
   constructor() { }
 
   ngOnInit() {
+   
+    // const numbers = range(1, 10);
+    // numbers.subscribe(x => console.log(x));
+  //   const stream$$ = concat(
+  //     maxStream$, minStream$
+  // );
+  //   stream$$.subscribe( data => console.log(data));
+  }
+  // max(a, b) {
+  //   return a > b ? a : b;
+  // }
+
+    // var max$ = source$.scan(max,0);
+    // const  objectStream$ = of({ name : 'chris' }, { age : 11 })
+    //   .pipe(
+    //   reduce((acc, curr) => Object.assign({}, acc, curr ))
+    // );
+    // objectStream$.subscribe(v => console.log(v));
     // document.addEventListener('click', evt => {
     //   console.log(evt);
     //   setTimeout(() => {
@@ -211,4 +232,3 @@ export class AboutComponent implements OnInit {
     // }
     // const [ a, b ] = test();
     // console.log(a, b);
-
