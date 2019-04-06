@@ -4,6 +4,7 @@ import {HomeComponent} from "./home/home.component";
 import {AboutComponent} from "./about/about.component";
 import {CourseComponent} from "./course/course.component";
 import {SnakesGameComponent} from "./snakes-game/snakes-game.component";
+import { ScrollComponent } from './scroll/scroll.component';
 
 const routes: Routes = [
     {
@@ -18,6 +19,10 @@ const routes: Routes = [
     {
         path: "snakesgame",
         component: SnakesGameComponent
+    },
+    {
+        path: "scroll",
+        component: ScrollComponent
     },
     {
         path: 'courses/:id',

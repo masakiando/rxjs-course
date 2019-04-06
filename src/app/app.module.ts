@@ -26,7 +26,7 @@ import { CourseDialogComponent } from './course-dialog/course-dialog.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatMomentDateModule} from "@angular/material-moment-adapter";
 import { SnakesGameComponent } from './snakes-game/snakes-game.component';
-
+import { ScrollComponent } from './scroll/scroll.component';
 @NgModule({
     declarations: [
         AppComponent,
@@ -35,10 +35,11 @@ import { SnakesGameComponent } from './snakes-game/snakes-game.component';
         CourseComponent,
         CoursesCardListComponent,
         CourseDialogComponent,
-        SnakesGameComponent
+        SnakesGameComponent,
+        ScrollComponent
     ],
     imports: [
-        BrowserModule,
+    BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,
         MatMenuModule,
