@@ -9,7 +9,6 @@ import { globalEventBus, LESSONS_LIST_AVAILABLE, ADD_NEW_LESSON } from '../event
 export class LessonsCounterComponent {
   lessonsCounter = 0;
   constructor() {
-    console.log('lessons-counter is registered as observer ..');
     globalEventBus.registerObserver(LESSONS_LIST_AVAILABLE, this);
     globalEventBus.registerObserver(
       ADD_NEW_LESSON,
@@ -18,7 +17,6 @@ export class LessonsCounterComponent {
   }
 
   notify(data: Lesson[]) {
-    console.log('lessons-counter received data ..');
     this.lessonsCounter = data.length;
   }
 

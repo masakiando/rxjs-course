@@ -10,7 +10,6 @@ export class LessonsListComponent implements Observer {
   lessons: Lesson[] = [];
 
   constructor() {
-    console.log('LessonsListComponent is registered as observer ...');
     globalEventBus.registerObserver(LESSONS_LIST_AVAILABLE, this);
     globalEventBus.registerObserver(ADD_NEW_LESSON, {
       notify: lessonText => {
@@ -23,12 +22,10 @@ export class LessonsListComponent implements Observer {
   }
 
   notify(data: Lesson[]) {
-    console.log('LessonsListComponent received data ...');
     this.lessons = data;
   }
 
   toggleLessonViewed(lesson: Lesson) {
-    console.log('toggle lesson');
     lesson.completed = !lesson.completed;
   }
 }
