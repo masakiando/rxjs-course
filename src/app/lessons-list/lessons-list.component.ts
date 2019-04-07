@@ -1,15 +1,22 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component } from '@angular/core';
+import { Lesson } from '../model/EventBus_LessonsTable';
+import { globalEventBus, Observer } from '../event-bus-experiments/event_bus';
 @Component({
   selector: 'lessons-list',
   templateUrl: './lessons-list.component.html',
   styleUrls: ['./lessons-list.component.scss']
 })
-export class LessonsListComponent implements OnInit {
+export class LessonsListComponent implements Observer {
+  lessons: Lesson[] = [];
 
-  constructor() { }
+  constructor() {
+    console.log('LessonsListComponent is registered as observer ...');
+    globalEventBus.registerObserver(this);
+  }
 
-  ngOnInit() {
+  notify(data: Lesson[]) {
+    console.log('LessonsListComponent received data ...');
+    this.lessons = data;
   }
 
 }

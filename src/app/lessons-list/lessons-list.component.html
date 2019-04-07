@@ -2,14 +2,15 @@
 >
 
     <thead>
-        <th>#</th>
+        <th>#id</th>
         <th>Description</th>
-        <th>Duration</th>
+        <th>duration</th>
     </thead>
 
     <tr *ngFor="let lesson of lessons">
+        <td class="description-cell">{{lesson.id}}</td>
         <td class="description-cell">{{lesson.description}}</td>
-        <td class="duration-cell">{{lesson.duration}}</td>
+        <td class="description-cell">{{lesson.duration}}</td>
     </tr>
 
 </table>
