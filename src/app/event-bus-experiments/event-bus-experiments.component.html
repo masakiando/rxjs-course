@@ -1,0 +1,9 @@
+<div class="course-container">
+  <h2>Event Bus Experiments</h2>
+  <lessons-counter></lessons-counter>
+  <lessons-list></lessons-list>
+  <mat-form-field class="search-bar">
+    <input matInput placeholder="Add New Lesson" #input autocomplete="off" />
+  </mat-form-field>
+  <button (click)="addLesson(input.value)" class="mat-raised-button">Add Lesson</button>
+</div>

@@ -27,6 +27,10 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatMomentDateModule} from "@angular/material-moment-adapter";
 import { SnakesGameComponent } from './snakes-game/snakes-game.component';
 import { ScrollComponent } from './scroll/scroll.component';
+import { BrowserEventExperimentsComponent } from './browser-event-experiments/browser-event-experiments.component';
+import { EventBusExperimentsComponent } from './event-bus-experiments/event-bus-experiments.component';
+import { LessonsListComponent } from './lessons-list/lessons-list.component';
+import { LessonsCounterComponent } from './lessons-counter/lessons-counter.component';
 @NgModule({
     declarations: [
         AppComponent,
@@ -36,7 +40,11 @@ import { ScrollComponent } from './scroll/scroll.component';
         CoursesCardListComponent,
         CourseDialogComponent,
         SnakesGameComponent,
-        ScrollComponent
+        ScrollComponent,
+        BrowserEventExperimentsComponent,
+        EventBusExperimentsComponent,
+        LessonsListComponent,
+        LessonsCounterComponent
     ],
     imports: [
     BrowserModule,

@@ -1,0 +1,15 @@
+<table class="lessons-table mat-elevation-z7" 
+>
+
+    <thead>
+        <th>#</th>
+        <th>Description</th>
+        <th>Duration</th>
+    </thead>
+
+    <tr *ngFor="let lesson of lessons">
+        <td class="description-cell">{{lesson.description}}</td>
+        <td class="duration-cell">{{lesson.duration}}</td>
+    </tr>
+
+</table>
