@@ -11,6 +11,7 @@ export class LessonsListComponent implements Observer {
 
   constructor() {
     globalEventBus.registerObserver(LESSONS_LIST_AVAILABLE, this);
+
     globalEventBus.registerObserver(ADD_NEW_LESSON, {
       notify: lessonText => {
         this.lessons.push({
