@@ -20,19 +20,14 @@ class EventBus implements Subject {
 
   registerObserver(eventType: string, obs: Observer) {
     const observers = this.observersPerEventType(eventType);
-    console.log(
-      'observers: ', observers,
-      'eventType: ', eventType,
-      'obs: ', obs,
-    );
+    console.log('observers: ', observers, 'eventType: ', eventType, 'obs: ', obs);
     observers.push(obs);
     // console.log('observers', observers);
-    
   }
   unregisterObserver(eventType: string, obs: Observer) {
     _.remove(this.observersPerEventType(eventType), el => el === obs);
   }
-  
+
   notifyObserver(eventType: string, data: any) {
     this.observersPerEventType(eventType).forEach(obs => {
       obs.notify(data);
