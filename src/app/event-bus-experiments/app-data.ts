@@ -30,30 +30,32 @@ class SubjectImplementation implements Subject {
   }
 }
 
-class DataStore {
+class DataStore implements Observable {
   private lessons: Lesson[] = [];
   private lessonsListSubject = new SubjectImplementation();
 
-  public lessonsList$: Observable = {
-    subscribe: obs => {
-      this.lessonsListSubject.subscribe(obs);
-      // これないと
-      obs.next(this.lessons);
-    },
-    unsubscribe: obs => this.lessonsListSubject.unsubscribe(obs),
-  };
+  subscribe(obs: Observer) {
+    this.lessonsListSubject.subscribe(obs);
+    // これないと
+    obs.next(this.lessons);
+  }
 
-  public initializeLessonsList(newList: Lesson[]) {
+  unsubscribe(obs: Observer) {
+    this.lessonsListSubject.unsubscribe(obs);
+  }
+
+
+  initializeLessonsList(newList: Lesson[]) {
     this.lessons = _.cloneDeep(newList);
     this.broadcast();
   }
 
-  public addLesson(newLesson: Lesson) {
+  addLesson(newLesson: Lesson) {
     this.lessons.push(_.cloneDeep(newLesson));
     this.broadcast();
   }
 
-  public deleteLesson(deleted: Lesson) {
+  deleteLesson(deleted: Lesson) {
     _.remove(
       this.lessons,
       lesson => lesson.id === deleted.id
@@ -61,7 +63,7 @@ class DataStore {
     this.broadcast();
   }
 
-  public toggleLessonViewed(toggle: Lesson) {
+  toggleLessonViewed(toggle: Lesson) {
     const lesson = _.find(
       this.lessons,
       // tslint:disable-next-line:no-shadowed-variable
