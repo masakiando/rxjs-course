@@ -1,30 +1,22 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Lesson } from '../model/LessonsTable';
-import { globalEventBus, Observer, LESSONS_LIST_AVAILABLE, ADD_NEW_LESSON } from '../event-bus-experiments/event_bus';
 import * as _ from 'lodash';
+import { Observer, lessonsList$ } from '../event-bus-experiments/app-data';
 @Component({
   selector: 'lessons-list',
   templateUrl: './lessons-list.component.html',
   styleUrls: ['./lessons-list.component.scss'],
 })
-export class LessonsListComponent implements Observer {
+export class LessonsListComponent implements Observer, OnInit {
   lessons: Lesson[] = [];
 
-  constructor() {
-    globalEventBus.registerObserver(LESSONS_LIST_AVAILABLE, this);
+  ngOnInit(): void {
+    lessonsList$.subscribe(this);
 
-    globalEventBus.registerObserver(ADD_NEW_LESSON, {
-      notify: lessonText => {
-        this.lessons.push({
-          id: this.lessons.length + 1,
-          description: lessonText,
-        });
-      },
-    });
   }
 
-  notify(data: Lesson[]) {
-    this.lessons = data;
+  next(data: Lesson[]) {
+    this.lessons = data.slice(0);
   }
 
   toggleLessonViewed(lesson: Lesson) {
@@ -33,6 +25,5 @@ export class LessonsListComponent implements Observer {
 
   delete(deleted: Lesson) {
     _.remove(this.lessons, lesson => lesson.id === deleted.id);
-    globalEventBus.notifyObserver(LESSONS_LIST_AVAILABLE, this.lessons);
   }
 }

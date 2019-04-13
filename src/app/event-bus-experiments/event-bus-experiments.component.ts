@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { globalEventBus, LESSONS_LIST_AVAILABLE, ADD_NEW_LESSON } from './event_bus';
-import { Lessons } from '../model/LessonsTable';
-import { Lesson } from '../model/LessonsTable';
+import { Lessons, Lesson } from '../model/LessonsTable';
+import { initializeLessonsList, lessonsList$, add } from './app-data';
+
 import * as _ from 'lodash';
 @Component({
   selector: 'event-bus-experiments',
@@ -9,26 +9,24 @@ import * as _ from 'lodash';
   styleUrls: ['./event-bus-experiments.component.scss'],
 })
 export class EventBusExperimentsComponent implements OnInit {
-  lessons: Lesson[] = [];
-
-  constructor() {
-    this.lessons = Lessons.slice(0);
-  }
-
   ngOnInit() {
-    globalEventBus.notifyObserver(LESSONS_LIST_AVAILABLE, this.lessons);
+    initializeLessonsList(Lessons.slice(0));
     // シュミレートサーバーリクエスト
     setTimeout(() => {
-      this.lessons.push({
-        id: this.lessons.length + 1,
+      const newLesson = {
+        id: Lessons.length + 1,
         description: 'New lesson arriving from the backend',
-      });
-      globalEventBus.notifyObserver(LESSONS_LIST_AVAILABLE, this.lessons);
+      };
+      // TODO:
+      add(newLesson);
     }, 5000);
   }
 
   addLesson(lessonText: string) {
-    console.log('lessonText', lessonText);
-    globalEventBus.notifyObserver(ADD_NEW_LESSON, lessonText);
+    const newLesson = {
+        id: Lessons.length + 1,
+        description: lessonText,
+    };
+    add(newLesson);
   }
 }
