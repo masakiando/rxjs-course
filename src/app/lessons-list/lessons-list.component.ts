@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Lesson } from '../model/LessonsTable';
+import { ILesson } from '../model/LessonsTable';
 import * as _ from 'lodash';
 import { Observer, store } from '../event-bus-experiments/app-data';
 @Component({
@@ -9,21 +9,21 @@ import { Observer, store } from '../event-bus-experiments/app-data';
 })
 
 export class LessonsListComponent implements Observer, OnInit {
-  lessons: Lesson[] = [];
+  lessons: ILesson[] = [];
 
   ngOnInit(): void {
     store.subscribe(this);
   }
 
-  next(data: Lesson[]) {
+  next(data: ILesson[]) {
     this.lessons = data;
   }
 
-  toggleLessonViewed(lesson: Lesson) {
+  toggleLessonViewed(lesson: ILesson) {
     store.toggleLessonViewed(lesson);
   }
 
-  delete(deleted: Lesson) {
+  delete(deleted: ILesson) {
     store.deleteLesson(deleted);
   }
 }

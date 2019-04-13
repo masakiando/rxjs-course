@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Lesson } from '../model/LessonsTable';
+import { ILesson } from '../model/LessonsTable';
 import { Observer, store } from '../event-bus-experiments/app-data';
 
 @Component({
@@ -15,7 +15,7 @@ export class LessonsCounterComponent implements Observer, OnInit {
     store.subscribe(this);
   }
 
-  next(data: Lesson[]) {
+  next(data: ILesson[]) {
     this.lessonsCounter = data.length;
   }
 }

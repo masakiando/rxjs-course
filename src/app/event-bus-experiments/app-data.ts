@@ -1,6 +1,5 @@
 import * as _ from 'lodash';
-import { Lesson } from '../model/LessonsTable';
-import { MAT_BUTTON_TOGGLE_DEFAULT_OPTIONS } from '@angular/material';
+import { ILesson } from '../model/LessonsTable';
 
 export interface Observer {
   next(data: any);
@@ -31,7 +30,7 @@ class SubjectImplementation implements Subject {
 }
 
 class DataStore implements Observable {
-  private lessons: Lesson[] = [];
+  private lessons: ILesson[] = [];
   private lessonsListSubject = new SubjectImplementation();
 
   subscribe(obs: Observer) {
@@ -45,17 +44,17 @@ class DataStore implements Observable {
   }
 
 
-  initializeLessonsList(newList: Lesson[]) {
+  initializeLessonsList(newList: ILesson[]) {
     this.lessons = _.cloneDeep(newList);
     this.broadcast();
   }
 
-  addLesson(newLesson: Lesson) {
+  addLesson(newLesson: ILesson) {
     this.lessons.push(_.cloneDeep(newLesson));
     this.broadcast();
   }
 
-  deleteLesson(deleted: Lesson) {
+  deleteLesson(deleted: ILesson) {
     _.remove(
       this.lessons,
       lesson => lesson.id === deleted.id
@@ -63,7 +62,7 @@ class DataStore implements Observable {
     this.broadcast();
   }
 
-  toggleLessonViewed(toggle: Lesson) {
+  toggleLessonViewed(toggle: ILesson) {
     const lesson = _.find(
       this.lessons,
       // tslint:disable-next-line:no-shadowed-variable
