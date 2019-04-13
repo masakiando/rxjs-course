@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { Lessons, Lesson } from '../model/LessonsTable';
+import { Lessons } from '../model/LessonsTable';
 import { store } from './app-data';
 
 import * as _ from 'lodash';
