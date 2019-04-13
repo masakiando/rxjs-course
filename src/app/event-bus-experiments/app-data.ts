@@ -1,5 +1,6 @@
 import * as _ from 'lodash';
 import { Lesson } from '../model/LessonsTable';
+import { MAT_BUTTON_TOGGLE_DEFAULT_OPTIONS } from '@angular/material';
 
 export interface Observer {
   next(data: any);
@@ -29,24 +30,50 @@ class SubjectImplementation implements Subject {
   }
 }
 
-const lessonsListSubject = new SubjectImplementation();
+class DataStore {
+  private lessons: Lesson[] = [];
+  private lessonsListSubject = new SubjectImplementation();
 
-export let lessonsList$: Observable = {
-  subscribe: obs => {
-    lessonsListSubject.subscribe(obs);
-    // これないと
-    obs.next(lessons);
-  },
-  unsubscribe: obs => lessonsListSubject.unsubscribe(obs),
-};
+  public lessonsList$: Observable = {
+    subscribe: obs => {
+      this.lessonsListSubject.subscribe(obs);
+      // これないと
+      obs.next(this.lessons);
+    },
+    unsubscribe: obs => this.lessonsListSubject.unsubscribe(obs),
+  };
 
-let lessons: Lesson[] = [];
+  public initializeLessonsList(newList: Lesson[]) {
+    this.lessons = _.cloneDeep(newList);
+    this.broadcast();
+  }
 
-export function initializeLessonsList(newList: Lesson[]) {
-  lessons = _.cloneDeep(newList);
-  lessonsListSubject.next(lessons);
+  public addLesson(newLesson: Lesson) {
+    this.lessons.push(_.cloneDeep(newLesson));
+    this.broadcast();
+  }
+
+  public deleteLesson(deleted: Lesson) {
+    _.remove(
+      this.lessons,
+      lesson => lesson.id === deleted.id
+    );
+    this.broadcast();
+  }
+
+  public toggleLessonViewed(toggle: Lesson) {
+    const lesson = _.find(
+      this.lessons,
+      // tslint:disable-next-line:no-shadowed-variable
+      lesson => lesson.id === toggle.id
+    );
+    lesson.completed = !lesson.completed;
+    this.broadcast();
+  }
+
+  broadcast() {
+    this.lessonsListSubject.next(_.cloneDeep(this.lessons));
+  }
 }
-export function add(data: any) {
-  lessons.push(data);
-  lessonsListSubject.next(lessons);
-}
+
+export const store = new DataStore();

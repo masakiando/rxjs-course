@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Lessons, Lesson } from '../model/LessonsTable';
-import { initializeLessonsList, lessonsList$, add } from './app-data';
+import { store } from './app-data';
 
 import * as _ from 'lodash';
 @Component({
@@ -10,23 +10,22 @@ import * as _ from 'lodash';
 })
 export class EventBusExperimentsComponent implements OnInit {
   ngOnInit() {
-    initializeLessonsList(Lessons.slice(0));
+    store.initializeLessonsList(Lessons.slice(0));
     // シュミレートサーバーリクエスト
     setTimeout(() => {
       const newLesson = {
-        id: Lessons.length + 1,
+        id: Math.random(),
         description: 'New lesson arriving from the backend',
       };
-      // TODO:
-      add(newLesson);
+      store.addLesson(newLesson);
     }, 5000);
   }
 
   addLesson(lessonText: string) {
     const newLesson = {
-        id: Lessons.length + 1,
+        id: Math.random(),
         description: lessonText,
     };
-    add(newLesson);
+    store.addLesson(newLesson);
   }
 }
