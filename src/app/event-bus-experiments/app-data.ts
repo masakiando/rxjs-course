@@ -18,7 +18,6 @@ class SubjectImplementation implements Subject {
 
   next(data: any) {
     this.observers.forEach(obs => {
-      debugger
       return obs.next(data);
     });
   }
@@ -48,7 +47,6 @@ export function initializeLessonsList(newList: Lesson[]) {
   lessonsListSubject.next(lessons);
 }
 export function add(data: any) {
-  debugger
   lessons.push(data);
   lessonsListSubject.next(lessons);
 }

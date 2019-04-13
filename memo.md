@@ -1,3 +1,12 @@
+vsCode
+これをグローバル設定ファイルに追加してみてください。
+Support/Code/User/keybindings.json
+"workbench.colorCustomizations": {
+    "editorCursor.foreground": "#ffff00",
+    "terminalCursor.foreground": "#ffff00"
+}
+
+
 broadcast
 コンピュータネットワーク、電気通信、情報理論において、ブロードキャスト（英: broadcast）とは、同じメッセージを複数の受信者に同時に転送することである。
 
