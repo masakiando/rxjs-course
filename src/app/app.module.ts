@@ -35,6 +35,11 @@ import { EventBusExperimentsComponent } from './event-bus-experiments/event-bus-
 import { LessonsListComponent } from './lessons-list/lessons-list.component';
 import { LessonsCounterComponent } from './lessons-counter/lessons-counter.component';
 import { RxAndfirebaseComponent } from './rx-andfirebase/rx-andfirebase.component';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { firebaseConfig } from '../environments/fireabse.config';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -72,6 +77,9 @@ import { RxAndfirebaseComponent } from './rx-andfirebase/rx-andfirebase.componen
     MatDatepickerModule,
     MatMomentDateModule,
     ReactiveFormsModule,
+    AngularFireModule.initializeApp(firebaseConfig, ''),
+    AngularFireAuthModule,
+    AngularFireDatabaseModule
   ],
   providers: [],
   bootstrap: [AppComponent],

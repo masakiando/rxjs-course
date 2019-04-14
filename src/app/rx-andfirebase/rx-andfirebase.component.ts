@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { RxAndFirebaseService } from '../services/rx-andfirebase.service';
+import { Course3 } from '../model/ICourse3';
+import { Lesson3 } from '../model/ILesson3';
 
 @Component({
   selector: 'rx-andfirebase',
@@ -7,9 +10,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RxAndfirebaseComponent implements OnInit {
 
-  constructor() { }
-
   ngOnInit() {
+
   }
 
 }

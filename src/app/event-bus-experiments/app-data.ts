@@ -1,9 +1,42 @@
 import * as _ from 'lodash';
-import { ILesson } from '../model/LessonsTable';
+import { ILesson } from '../model/ILessons2';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { Observable } from 'rxjs';
 import { Observer } from 'rxjs';
 
+class DataStore  {
+  private lessonsListSubject = new BehaviorSubject([]);
+  public lessonsList$: Observable<ILesson[]> = this.lessonsListSubject.asObservable();
+
+  initializeLessonsList(newList: ILesson[]) {
+    this.lessonsListSubject.next(_.cloneDeep(newList));
+  }
+
+  addLesson(newLesson: ILesson) {
+    const lessons = this.cloneLessons();
+    lessons.push(_.cloneDeep(newLesson));
+    this.lessonsListSubject.next(lessons);
+  }
+
+  deleteLesson(deleted: ILesson) {
+    const lessons = this.cloneLessons();
+    _.remove(lessons, l => l.id === deleted.id);
+    this.lessonsListSubject.next(lessons);
+  }
+
+  toggleLessonViewed(toggle: ILesson) {
+    const lessons = this.cloneLessons();
+    const lesson = _.find(lessons, l => l.id === toggle.id);
+    lesson.completed = !lesson.completed;
+    this.lessonsListSubject.next(lessons);
+  }
+
+  cloneLessons() {
+    return _.cloneDeep(this.lessonsListSubject.getValue());
+  }
+}
+
+export const store = new DataStore();
 // export interface Observer {
 //   next(data: any);
 // }
@@ -79,36 +112,3 @@ import { Observer } from 'rxjs';
 //     this.lessonsListSubject.next(_.cloneDeep(this.lessons));
 //   }
 // }
-class DataStore  {
-  private lessonsListSubject = new BehaviorSubject([]);
-  public lessonsList$: Observable<ILesson[]> = this.lessonsListSubject.asObservable();
-
-  initializeLessonsList(newList: ILesson[]) {
-    this.lessonsListSubject.next(_.cloneDeep(newList));
-  }
-
-  addLesson(newLesson: ILesson) {
-    const lessons = this.cloneLessons();
-    lessons.push(_.cloneDeep(newLesson));
-    this.lessonsListSubject.next(lessons);
-  }
-
-  deleteLesson(deleted: ILesson) {
-    const lessons = this.cloneLessons();
-    _.remove(lessons, l => l.id === deleted.id);
-    this.lessonsListSubject.next(lessons);
-  }
-
-  toggleLessonViewed(toggle: ILesson) {
-    const lessons = this.cloneLessons();
-    const lesson = _.find(lessons, l => l.id === toggle.id);
-    lesson.completed = !lesson.completed;
-    this.lessonsListSubject.next(lessons);
-  }
-
-  cloneLessons() {
-    return _.cloneDeep(this.lessonsListSubject.getValue());
-  }
-}
-
-export const store = new DataStore();

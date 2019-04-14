@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ILesson } from '../model/LessonsTable';
+import { ILesson } from '../model/ILessons2';
 import { store } from '../event-bus-experiments/app-data';
 import { Observer } from 'rxjs';
 
