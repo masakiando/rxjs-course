@@ -30,12 +30,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { CourseDialogComponent } from './course-dialog/course-dialog.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
-import { SnakesGameComponent } from './snakes-game/snakes-game.component';
-import { ScrollComponent } from './scroll/scroll.component';
 import { BrowserEventExperimentsComponent } from './browser-event-experiments/browser-event-experiments.component';
 import { EventBusExperimentsComponent } from './event-bus-experiments/event-bus-experiments.component';
 import { LessonsListComponent } from './lessons-list/lessons-list.component';
 import { LessonsCounterComponent } from './lessons-counter/lessons-counter.component';
+import { RxAndfirebaseComponent } from './rx-andfirebase/rx-andfirebase.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,12 +43,11 @@ import { LessonsCounterComponent } from './lessons-counter/lessons-counter.compo
     CourseComponent,
     CoursesCardListComponent,
     CourseDialogComponent,
-    SnakesGameComponent,
-    ScrollComponent,
     BrowserEventExperimentsComponent,
     EventBusExperimentsComponent,
     LessonsListComponent,
     LessonsCounterComponent,
+    RxAndfirebaseComponent,
   ],
   imports: [
     BrowserModule,

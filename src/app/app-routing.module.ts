@@ -3,10 +3,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import { CourseComponent } from './course/course.component';
-import { SnakesGameComponent } from './snakes-game/snakes-game.component';
-import { ScrollComponent } from './scroll/scroll.component';
 import { BrowserEventExperimentsComponent } from './browser-event-experiments/browser-event-experiments.component';
 import { EventBusExperimentsComponent } from './event-bus-experiments/event-bus-experiments.component';
+import { RxAndfirebaseComponent } from './rx-andfirebase/rx-andfirebase.component';
 
 const routes: Routes = [
   {
@@ -18,10 +17,6 @@ const routes: Routes = [
     component: AboutComponent,
   },
   {
-    path: 'snakesgame',
-    component: SnakesGameComponent,
-  },
-  {
     path: 'browser-event-experiments',
     component: BrowserEventExperimentsComponent,
   },
@@ -30,8 +25,8 @@ const routes: Routes = [
     component: EventBusExperimentsComponent,
   },
   {
-    path: 'scroll',
-    component: ScrollComponent,
+    path: 'rx-and-firebase',
+    component: RxAndfirebaseComponent ,
   },
   {
     path: 'courses/:id',
