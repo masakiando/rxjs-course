@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ILesson } from '../model/LessonsTable';
-import { Observer, store } from '../event-bus-experiments/app-data';
+import { store } from '../event-bus-experiments/app-data';
+import { Observer } from 'rxjs';
 
 @Component({
   selector: 'lessons-counter',
@@ -8,14 +9,20 @@ import { Observer, store } from '../event-bus-experiments/app-data';
   styleUrls: ['./lessons-counter.component.scss']
 })
 
-export class LessonsCounterComponent implements Observer, OnInit {
+export class LessonsCounterComponent implements
+Observer<ILesson[]>, OnInit {
   lessonsCounter = 0;
 
   ngOnInit() {
-    store.subscribe(this);
+    store.lessonsList$.subscribe(data => this.lessonsCounter = data.length);
   }
 
   next(data: ILesson[]) {
-    this.lessonsCounter = data.length;
+    // this.lessonsCounter = data.length;
   }
+
+  // tslint:disable-next-line:member-ordering
+  error: (err: any) => void;
+  // tslint:disable-next-line:member-ordering
+  complete: () => void;
 }

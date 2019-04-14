@@ -1,22 +1,27 @@
 import { Component, OnInit } from '@angular/core';
 import { ILesson } from '../model/LessonsTable';
 import * as _ from 'lodash';
-import { Observer, store } from '../event-bus-experiments/app-data';
+import { store } from '../event-bus-experiments/app-data';
+import { Observer } from 'rxjs';
+
 @Component({
   selector: 'lessons-list',
   templateUrl: './lessons-list.component.html',
   styleUrls: ['./lessons-list.component.scss'],
 })
 
-export class LessonsListComponent implements Observer, OnInit {
+export class LessonsListComponent implements Observer<ILesson[]>, OnInit {
+  closed?: boolean;
+  error: (err: any) => void;
+  complete: () => void;
   lessons: ILesson[] = [];
 
   ngOnInit(): void {
-    store.subscribe(this);
+    store.lessonsList$.subscribe(data => this.lessons = data);
   }
 
   next(data: ILesson[]) {
-    this.lessons = data;
+    // this.lessons = data;
   }
 
   toggleLessonViewed(lesson: ILesson) {
