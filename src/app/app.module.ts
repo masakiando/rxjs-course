@@ -34,7 +34,6 @@ import { BrowserEventExperimentsComponent } from './browser-event-experiments/br
 import { EventBusExperimentsComponent } from './event-bus-experiments/event-bus-experiments.component';
 import { LessonsListComponent } from './lessons-list/lessons-list.component';
 import { LessonsCounterComponent } from './lessons-counter/lessons-counter.component';
-import { RxAndfirebaseComponent } from './rx-andfirebase/rx-andfirebase.component';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
@@ -52,7 +51,6 @@ import { firebaseConfig } from '../environments/fireabse.config';
     EventBusExperimentsComponent,
     LessonsListComponent,
     LessonsCounterComponent,
-    RxAndfirebaseComponent,
   ],
   imports: [
     BrowserModule,
