@@ -17,7 +17,7 @@ export class AboutComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-   
+    const interval$ = interval(1000);
     // const numbers = range(1, 10);
     // numbers.subscribe(x => console.log(x));
   //   const stream$$ = concat(
