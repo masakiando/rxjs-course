@@ -5,6 +5,7 @@ import { AboutComponent } from './about/about.component';
 import { CourseComponent } from './course/course.component';
 import { BrowserEventExperimentsComponent } from './browser-event-experiments/browser-event-experiments.component';
 import { EventBusExperimentsComponent } from './event-bus-experiments/event-bus-experiments.component';
+import { StopwatchComponent } from './stopwatch/stopwatch.component';
 
 const routes: Routes = [
   {
@@ -22,6 +23,10 @@ const routes: Routes = [
   {
     path: 'event-bus-experiments',
     component: EventBusExperimentsComponent,
+  },
+  {
+    path: 'stopwatch',
+    component: StopwatchComponent,
   },
   {
     path: 'courses/:id',

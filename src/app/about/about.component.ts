@@ -17,53 +17,10 @@ export class AboutComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    const interval$ = interval(1000);
-    // const numbers = range(1, 10);
-    // numbers.subscribe(x => console.log(x));
-  //   const stream$$ = concat(
-  //     maxStream$, minStream$
-  // );
-  //   stream$$.subscribe( data => console.log(data));
-  }
-  // max(a, b) {
-  //   return a > b ? a : b;
-  // }
-
-    // var max$ = source$.scan(max,0);
-    // const  objectStream$ = of({ name : 'chris' }, { age : 11 })
-    //   .pipe(
-    //   reduce((acc, curr) => Object.assign({}, acc, curr ))
-    // );
-    // objectStream$.subscribe(v => console.log(v));
-    // document.addEventListener('click', evt => {
-    //   console.log(evt);
-    //   setTimeout(() => {
-    //     console.log('finished...');
-    //     let counter = 0;
-    //     setInterval(() => {
-    //       console.log(counter);
-    //       counter++;
-    //     }, 1000);
-    //   }, 3000);
-    // });
-// const http$ = createHttpObservable('/api/courses');
-// const sub = http$.subscribe(res => console.log(res));
-// setTimeout(() => sub.unsubscribe(), 0)
-// const interval$ = interval(1000)
-    // const interval$ = timer(3000, 1000);
-    // const sub = interval$.subscribe(val => console.log(val));
-    // setTimeout(() => sub.unsubscribe(), 10000);
-    // const click$ = fromEvent(document, 'click');
-    // click$.subscribe(val => console.log(val));
-    // const source = fromEvent(document, 'click');
-    // const example = source.pipe(
-    //   switchMap(val => interval(1000).pipe(mapTo('Hello, I made it!')))
-    // );
-    // const subscribe = example.subscribe(val => console.log(val));
     
-        // const myInterval = Rx.Observable.interval(1000);
-      }
 
+  }
+}
         // // first(1) success
         // of(1, 3, 7, 9, 10, 80, 100, 200)
         // .pipe(
@@ -232,3 +189,45 @@ export class AboutComponent implements OnInit {
     // }
     // const [ a, b ] = test();
     // console.log(a, b);
+   // const numbers = range(1, 10);
+    // numbers.subscribe(x => console.log(x));
+  //   const stream$$ = concat(
+  //     maxStream$, minStream$
+  // );
+  //   stream$$.subscribe( data => console.log(data));
+// max(a, b) {
+//   return a > b ? a : b;
+// }
+
+  // var max$ = source$.scan(max,0);
+  // const  objectStream$ = of({ name : 'chris' }, { age : 11 })
+  //   .pipe(
+  //   reduce((acc, curr) => Object.assign({}, acc, curr ))
+  // );
+  // objectStream$.subscribe(v => console.log(v));
+  // document.addEventListener('click', evt => {
+  //   console.log(evt);
+  //   setTimeout(() => {
+  //     console.log('finished...');
+  //     let counter = 0;
+  //     setInterval(() => {
+  //       console.log(counter);
+  //       counter++;
+  //     }, 1000);
+  //   }, 3000);
+  // });
+// const http$ = createHttpObservable('/api/courses');
+// const sub = http$.subscribe(res => console.log(res));
+// setTimeout(() => sub.unsubscribe(), 0)
+// const interval$ = interval(1000)
+  // const interval$ = timer(3000, 1000);
+  // const sub = interval$.subscribe(val => console.log(val));
+  // setTimeout(() => sub.unsubscribe(), 10000);
+  // const click$ = fromEvent(document, 'click');
+  // click$.subscribe(val => console.log(val));
+  // const source = fromEvent(document, 'click');
+  // const example = source.pipe(
+  //   switchMap(val => interval(1000).pipe(mapTo('Hello, I made it!')))
+  // );
+  // const subscribe = example.subscribe(val => console.log(val));
+      // const myInterval = Rx.Observable.interval(1000);

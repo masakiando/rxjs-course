@@ -38,6 +38,7 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { firebaseConfig } from '../environments/fireabse.config';
+import { StopwatchComponent } from './stopwatch/stopwatch.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { firebaseConfig } from '../environments/fireabse.config';
     EventBusExperimentsComponent,
     LessonsListComponent,
     LessonsCounterComponent,
+    StopwatchComponent,
   ],
   imports: [
     BrowserModule,
