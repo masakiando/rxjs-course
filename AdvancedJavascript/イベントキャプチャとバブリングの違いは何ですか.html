@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .body {
+            background-color: blue;
+            height: 500px;
+            width: 500px;
+        }
+        .first {
+            background-color:red;
+            height: 400px;
+            width: 400px;
+        }
+        .second {
+            background-color:Green;
+            height: 300px;
+            width: 300px;
+        }
+        .third {
+            background-color:yellow;
+            height: 200px;
+            width: 200px;
+        }
+        .fourth {
+            background-color:wheat;
+            height: 100px;
+            width: 100px;
+        }
+    </style>
+</head>
+<body class="body item">
+    <img src="image.png" height="300" width="300" alt="" srcset="">
+    <div class="first item">
+        <div class="second item">
+            <div class="third item">
+                <button class="fourth item">.....click Me!</button>
+            </div>
+        </div>
+    </div>
+    <script>
+       const items = document.getElementsByClassName('item');
+       const phase = false; 
+       for (let i = 0; i < items.length; i++) {
+           (function () {
+             let y = i;
+             items[y].addEventListener('click', function (event) {
+                 console.log(items[y], event);
+             }, phase)
+           })();
+       }
+    </script> 
+</body>
+</html>
+<!-- 左の矢印はイベントキャプチャ段階と呼ばれるか、時々段階1と呼ばれます。 -->
+<!-- 右の矢印はこれはイベントバブリングフェーズまたはフェーズ2と呼ばれます。 -->
+<!-- そのため、イベントが発生すると、イベントパス上のすべての要素に2回通知されます。 -->
+<!-- １または２どのフェーズをリスンしたいかaddEventListenerの第三引数で選択できる -->
+<!-- どのフェーズをデフォルトでリスンしたいのか指定しないと、イベントバブリングフェーズをリスンします。 -->
+<!-- コードでどのように機能するのかを説明　︎⬇︎　-->
+<!-- item class要素全てのclick eventをリッスンしています。 -->
+<!-- ボタンをクリックしたときに何が起こるか見てください。 -->
+<!-- コンソールログにプリントアウトします。 -->
+<!-- phase を　true に変えてコンソールログにプリントアウトします。-->
