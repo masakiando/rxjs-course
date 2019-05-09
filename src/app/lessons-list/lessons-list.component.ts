@@ -1,38 +1,34 @@
-import { Component } from '@angular/core';
-import { Lesson } from '../model/LessonsTable';
-import { globalEventBus, Observer, LESSONS_LIST_AVAILABLE, ADD_NEW_LESSON } from '../event-bus-experiments/event_bus';
+import { Component, OnInit } from '@angular/core';
+import { ILesson } from '../model/ILessons2';
 import * as _ from 'lodash';
+import { store } from '../event-bus-experiments/app-data';
+import { Observer } from 'rxjs';
+
 @Component({
   selector: 'lessons-list',
   templateUrl: './lessons-list.component.html',
   styleUrls: ['./lessons-list.component.scss'],
 })
-export class LessonsListComponent implements Observer {
-  lessons: Lesson[] = [];
 
-  constructor() {
-    globalEventBus.registerObserver(LESSONS_LIST_AVAILABLE, this);
+export class LessonsListComponent implements Observer<ILesson[]>, OnInit {
+  closed?: boolean;
+  error: (err: any) => void;
+  complete: () => void;
+  lessons: ILesson[] = [];
 
-    globalEventBus.registerObserver(ADD_NEW_LESSON, {
-      notify: lessonText => {
-        this.lessons.push({
-          id: this.lessons.length + 1,
-          description: lessonText,
-        });
-      },
-    });
+  ngOnInit(): void {
+    store.lessonsList$.subscribe(data => this.lessons = data);
   }
 
-  notify(data: Lesson[]) {
-    this.lessons = data;
+  next(data: ILesson[]) {
+    // this.lessons = data;
   }
 
-  toggleLessonViewed(lesson: Lesson) {
-    lesson.completed = !lesson.completed;
+  toggleLessonViewed(lesson: ILesson) {
+    store.toggleLessonViewed(lesson);
   }
 
-  delete(deleted: Lesson) {
-    _.remove(this.lessons, lesson => lesson.id === deleted.id);
-    globalEventBus.notifyObserver(LESSONS_LIST_AVAILABLE, this.lessons);
+  delete(deleted: ILesson) {
+    store.deleteLesson(deleted);
   }
 }

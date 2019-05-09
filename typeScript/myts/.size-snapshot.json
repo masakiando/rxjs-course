@@ -1,0 +1,36 @@
+{
+  "/Users/masakiando/rxjs-course_2/typeScript/myts/dist/myts.cjs.development.js": {
+    "bundled": 956,
+    "minified": 606,
+    "gzipped": 293
+  },
+  "/Users/masakiando/rxjs-course_2/typeScript/myts/dist/myts.cjs.production.js": {
+    "bundled": 912,
+    "minified": 586,
+    "gzipped": 291
+  },
+  "/Users/masakiando/rxjs-course_2/typeScript/myts/dist/myts.es.production.js": {
+    "bundled": 684,
+    "minified": 401,
+    "gzipped": 256,
+    "treeshaked": {
+      "rollup": {
+        "code": 0,
+        "import_statements": 0
+      },
+      "webpack": {
+        "code": 951
+      }
+    }
+  },
+  "/Users/masakiando/rxjs-course_2/typeScript/myts/dist/myts.umd.development.js": {
+    "bundled": 1305,
+    "minified": 511,
+    "gzipped": 325
+  },
+  "/Users/masakiando/rxjs-course_2/typeScript/myts/dist/myts.umd.production.js": {
+    "bundled": 1255,
+    "minified": 491,
+    "gzipped": 322
+  }
+}

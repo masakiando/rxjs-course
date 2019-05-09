@@ -1,24 +1,28 @@
-import { Component } from '@angular/core';
-import { Lesson } from '../model/LessonsTable';
-import { globalEventBus, LESSONS_LIST_AVAILABLE, ADD_NEW_LESSON } from '../event-bus-experiments/event_bus';
+import { Component, OnInit } from '@angular/core';
+import { ILesson } from '../model/ILessons2';
+import { store } from '../event-bus-experiments/app-data';
+import { Observer } from 'rxjs';
+
 @Component({
   selector: 'lessons-counter',
   templateUrl: './lessons-counter.component.html',
   styleUrls: ['./lessons-counter.component.scss']
 })
-export class LessonsCounterComponent {
+
+export class LessonsCounterComponent implements
+Observer<ILesson[]>, OnInit {
   lessonsCounter = 0;
-  constructor() {
-    globalEventBus.registerObserver(LESSONS_LIST_AVAILABLE, this);
-    
-    globalEventBus.registerObserver(
-      ADD_NEW_LESSON,
-       { notify: lessonText => this.lessonsCounter += 1 }
-     );
+
+  ngOnInit() {
+    store.lessonsList$.subscribe(data => this.lessonsCounter = data.length);
   }
 
-  notify(data: Lesson[]) {
-    this.lessonsCounter = data.length;
+  next(data: ILesson[]) {
+    // this.lessonsCounter = data.length;
   }
 
+  // tslint:disable-next-line:member-ordering
+  error: (err: any) => void;
+  // tslint:disable-next-line:member-ordering
+  complete: () => void;
 }

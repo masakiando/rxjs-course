@@ -5,15 +5,17 @@
         <th>#id</th>
         <th>Description</th>
         <th>duration</th>
+        <th>actions</th>
     </thead>
-
     <tr *ngFor="let lesson of lessons">
         <td class="description-cell">
                 {{lesson.id}}
-           <input type="checkbox" (click)="toggleLessonViewed(lesson)">
-            
+           <input [checked]="lesson.completed" 
+             type="checkbox" (click)="toggleLessonViewed(lesson)">
+           
         </td>
-        <td class="description-cell">{{lesson.description}}</td>
+        <td class="description-cell" [ngClass]="{'lesson-viewed': lesson.completed}">
+            {{lesson.description}}</td>
         <td class="description-cell">{{lesson.duration}}</td>
         <td class="description-cell">
             <button class="botton mat-button" 
