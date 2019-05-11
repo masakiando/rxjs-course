@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      .body {
+        background-color: blue;
+        height: 500px;
+        width: 500px;
+      }
+      .first {
+        background-color: red;
+        height: 400px;
+        width: 400px;
+      }
+      .second {
+        background-color: Green;
+        height: 300px;
+        width: 300px;
+      }
+      .third {
+        background-color: yellow;
+        height: 200px;
+        width: 200px;
+      }
+      .fourth {
+        background-color: wheat;
+        height: 100px;
+        width: 100px;
+      }
+    </style>
+  </head>
+  <body class="body item">
+    <img
+      src="eventCaptringEventBubbing.png"
+      height="300"
+      width="300"
+      alt=""
+      srcset=""
+    />
+    <div class="first item">
+      <div class="second item">
+        <div class="third item">
+          <input class="fourth item" type="checkbox" />
+        </div>
+      </div>
+    </div>
+    <script>
+      const items = document.getElementsByClassName("item");
+      const phase = true;
+      for (let i = 0; i < items.length; i++) {
+        (function() {
+          let y = i;
+          items[y].addEventListener(
+            "click",
+            function(event) {
+              alert(y);
+              if (y === 2) {
+                event.stopPropagation();
+              }
+              event.preventDefault();
+              console.log(items[y], event);
+            },
+            phase
+          );
+        })();
+      }
+    </script>
+  </body>
+</html>
+<!-- stopPropagation -->
+<!-- 現在イベントキャプチャリング true です-->
+<!-- inpunt checkbox  click して　alert を見ます-->
+<!-- 伝播するので非同期ではないということを最初に理解する必要があります -->
+<!-- 前のイベントリスナの実行が終了するまで、次のイベントリスナは呼び出されません。 -->
+<!-- if　ブロックをコメントアウトをせず inpunt checkbox  click して　alert を見ます -->
+<!-- if　ブロックでstopPropagationを実施しています-->
+<!-- inpunt checkbox はチェック状態になります-->
+<!-- バブリング段階でも同じことが言えます -->
+<!-- inpunt checkbox はチェック状態になるタイミングはイベントチェーン伝達の終了後になる-->
+<!-- 伝播が停止したからといって、実際にイベントが次のCallbackに移動するのを妨げるわけではありません。 -->
+<!-- 伝播が停止してもDefault eventは処理される input checkbox 変化は起こる-->
+<!-- preventDefault -->
+<!-- イベントがどの要素でも引き起こされるであろうデフォルトの振る舞いを止める -->
+質問1: Does event capturing happen first or is it event bubbling? [x]Event
+capturing happens first Event bubbing happens first 質問2: Does this code add an
+event listener to the event capturing phase or the bubbling phase? (function ()
+{ var y = i; items[y].addEventListener("click", function (event) {
+console.log(items[y] event); } true); })(); Does this code add an event listener
+to the event capturing phase or the bubbling phase? [x]Event capturing phase
+Event bubbing phase 質問3: (function () { var y = i;
+items[y].addEventListener("click", function (event) { console.log(items[y]
+event); }); })(); Event capturing phase [x]Event bubbing phase 質問4: Calling
+the prevent default function in an event listener stops the next event listener
+from being called? True [x]False 質問5: If we clicked a checkbox, calling
+preventDefault() from one of the event listeners would stop the checkbox from
+having the tick applied to it. [x]True False
