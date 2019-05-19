@@ -25,20 +25,12 @@ export default () => {
     debounceTime(400),
     map(evt => evt.target.value)
   );
-  const taizyuNumber$ = fromEvent(form.taizyu, "input").pipe(
-    debounceTime(400),
-    map(evt => evt.target.value)
-  );
-  const sintyouNumber$ = fromEvent(form.sintyou, "input").pipe(
-    debounceTime(400),
-    map(evt => evt.target.value)
-  );
   const submitButton$ = fromEvent(form.btn, "click");
 
   // const formData$ = combineLatest(formName$, formEmail$, formNumber$);
 
   const formData$ = submitButton$.pipe(
-    withLatestFrom(taizyuNumber$, sintyouNumber$),
+    withLatestFrom(formName$, formEmail$, formNumber$),
     map(data => {
       console.log("data: ", data);
       const [click, ...formData] = data;
