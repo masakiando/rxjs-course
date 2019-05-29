@@ -1,10 +1,4 @@
-import {
-  Component,
-  OnInit,
-  ViewEncapsulation,
-  ViewChild,
-  ElementRef
-} from "@angular/core";
+import { Component, OnInit, ViewEncapsulation, ViewChild, ElementRef } from '@angular/core';
 import {
   merge,
   interval,
@@ -18,8 +12,8 @@ import {
   Subject,
   BehaviorSubject,
   range,
-  from
-} from "rxjs";
+  from,
+} from 'rxjs';
 import {
   map,
   mapTo,
@@ -33,22 +27,23 @@ import {
   combineLatest,
   buffer,
   scan,
-  single
-} from "rxjs/operators";
-import { createHttpObservable } from "../util";
-import { initNgModule } from "@angular/core/src/view/ng_module";
-import { debug, RxJsLoggingLevel, setRxJsLoggingLevel } from "../debug";
-import { Response } from "express";
+  single,
+} from 'rxjs/operators';
+import { createHttpObservable } from '../util';
+import { initNgModule } from '@angular/core/src/view/ng_module';
+import { debug, RxJsLoggingLevel, setRxJsLoggingLevel } from '../debug';
+import { Response } from 'express';
 
 @Component({
-  selector: "about",
-  templateUrl: "./about.component.html",
-  styleUrls: ["./about.component.css"]
+  selector: 'about',
+  templateUrl: './about.component.html',
+  styleUrls: ['./about.component.css'],
 })
 export class AboutComponent implements OnInit {
   public deleteSubject = new Subject();
   source$: Observable<any>;
-  @ViewChild("http") button: ElementRef;
+  courses$: Observable<any>;
+  @ViewChild('http') button: ElementRef;
   constructor() {}
 
   ngOnInit() {
@@ -65,12 +60,17 @@ export class AboutComponent implements OnInit {
           .catch(err => observer.error(err));
       });
 
-    const path = "/api/courses";
-    const courses$ = http(path).pipe(map(res => Object.values(res["payload"])));
-
-    courses$.subscribe(courses => console.log(courses), noop, () =>
-      console.log("completed")
+    const path = '/api/courses';
+    const courses$ = http(path).pipe(
+      map(res => Object.values(res['payload']))
     );
+    const obs = {
+      next: courses => console.log(courses),
+      error: noop,
+      complete: () => console.log('completed'),
+    };
+
+    const subscripton =  courses$.subscribe(obs);
   }
 }
 // // first(1) success

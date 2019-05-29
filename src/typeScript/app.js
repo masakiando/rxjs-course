@@ -25,3 +25,15 @@ console.log(reverse(get6Characters(uppercase(getName({ name: 'Buckethead' })))))
 console.log(R.pipe(getName, uppercase, get6Characters, reverse)({ name: 'Buckethead' }));
 var test = R.pipe(function (v) { return addSalesTax(v, 2); }, function (v) { return addSalesTax(v, 0.08); });
 console.log(test(10));
+
+
+
+console.log('test', test);
+
+console.log('', );
+                        
+console.log('test', test);
+
+console.log('test', test);
+
+console.log('', ); 

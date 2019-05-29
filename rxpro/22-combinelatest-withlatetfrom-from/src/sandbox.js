@@ -1,7 +1,7 @@
 import { updateDisplay, displayLog } from "./utils";
 
 import { fromEvent, combineLatest } from "rxjs";
-import { map, debounceTime, withLatestFrom } from "rxjs/operators";
+import { map, debounceTime, withLatestFrom, mapTo, tap} from "rxjs/operators";
 
 import * as R from "ramda";
 import * as _ from "lodash";
@@ -24,7 +24,19 @@ export default () => {
   const formNumber$ = fromEvent(form.phone, "input").pipe(
     debounceTime(400),
     map(evt => evt.target.value)
-  );
+  ); 
+  const formWidth$ = fromEvent(form.width, "input").pipe(
+    map(e => [{name: e.target.name, value: e.target.value}])
+  )
+  formWidth$.subscribe(x => console.log(x));
+
+  const formHeight$ = fromEvent(form.height, "input").pipe(
+    map(evt => evt.target.value)
+  ); 
+  
+
+
+
   const submitButton$ = fromEvent(form.btn, "click");
 
   // const formData$ = combineLatest(formName$, formEmail$, formNumber$);
