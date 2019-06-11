@@ -1,0 +1,125 @@
+/'
+ブログのシーケンス図
+- ブラウザでトップページを表示する
+- JavaScriptで通知件数を表示する
+'/
+
+@startuml
+
+actor Browser as browser
+participant BlogWeb as web
+participant BlogAPI as api
+database BlogDB as db
+
+activate browser
+
+group 画面の表示
+    browser -> web :トップページにランディング\nGET: ohke.hogeblog.jp
+    activate web
+    web -> db :トップに表示するエントリを取得
+    web <-- db :
+    web --> browser :トップページを表示
+    deactivate web
+end
+
+group 通知の表示
+    browser ->> api :ユーザへの通知情報をリクエスト\nGET api.hogeblog.jp/notify/ohke
+    activate api
+    api -> db :ohkeへの通知を取得
+    db --> api :
+    api --> browser :通知情報をレスポンス\n{"count":2,"messages":[...]}
+    deactivate api
+    alt countが1以上
+        browser -> browser :件数をアイコンの横に表示
+    end
+end
+note right: ロードしたnotify.jsから実行
+
+deactivate browser
+
+@enduml
+
+
+@startuml
+
+interface IA {
+  id: number
+  name: string
+}
+
+IA --> A
+Client --> Target : Uses▶︎
+B --> C
+C - A
+
+A o- B
+B o- C
+
+@enduml 
+
+@startuml
+class Car
+
+Driver - Car : drives >
+Car *- Wheel : have 4 >
+Car -- Person : < owns
+
+@enduml
+
+@startuml
+
+Class01 "1" *-- "many" Class02 : contains
+
+Class03 o-- Class04 : aggregation
+
+Class05 --> "1" Class06
+
+@enduml
+
+@startuml
+Class21 #-- Class22
+Class23 x-- Class24
+Class25 }-- Class26
+Class27 +-- Class28
+Class29 ^-- Class30
+@enduml
+
+@startuml
+Class11 <|.. Class12
+Class13 --> Class14
+Class15 ..> Class16
+Class17 ..|> Class18
+Class19 <--* Class20
+@enduml
+
+
+@startuml
+Class01 <|-- Class02
+Class03 *-- Class04
+Class05 o-- Class06
+Class07 .. Class08
+Class09 -- Class10
+@enduml
+
+
+@startuml
+
+Live o-- NkChart: new >
+NkChart o-- PieChart: new  >
+PieChart o-- aaaaaa: new  >
+PieChart o-- bbbbbb: new  >
+PieChart o-- cccccc: new  >
+
+@enduml
+
+@startuml
+g -- text 
+text -- span
+
+@enduml
+
+@startuml
+Subject  o--  Observer 
+Observer <|-- ConcreteObserverA
+Observer <|-- ConcreteObserverB
+@enduml
